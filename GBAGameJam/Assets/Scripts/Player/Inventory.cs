@@ -31,7 +31,7 @@ public class Inventory : MonoBehaviour
         items.Add(newItemToAdd);
     }
 
-    void SelectPreviousItem()
+    public void SelectPreviousItem()
     {
         if(items.Count <= 0)
         {
@@ -51,7 +51,7 @@ public class Inventory : MonoBehaviour
         
     }
 
-    void SelectNextItem()
+    public void SelectNextItem()
     {
         if(items.Count <= 0)
         {

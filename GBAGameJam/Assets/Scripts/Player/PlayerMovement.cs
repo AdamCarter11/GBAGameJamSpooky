@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb;
     float horizontalMove;
     bool isFacingRight = true;
+    [HideInInspector] public bool canMove = true;
 
     private void Start()
     {
@@ -57,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        horizontalMove = context.ReadValue<Vector2>().x;
+        if(canMove)
+            horizontalMove = context.ReadValue<Vector2>().x;
     }
 }

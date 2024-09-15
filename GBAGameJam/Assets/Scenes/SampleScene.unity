@@ -473,6 +473,7 @@ GameObject:
   - component: {fileID: 1767084901}
   - component: {fileID: 1767084900}
   - component: {fileID: 1767084902}
+  - component: {fileID: 1767084903}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -587,6 +588,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+  canMove: 1
 --- !u!114 &1767084901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,11 +690,35 @@ MonoBehaviour:
     m_ActionId: 21a2f89c-8b05-4740-9024-c48995a1131f
     m_ActionName: Player/Jump[/Keyboard/w]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1767084903}
+        m_TargetAssemblyTypeName: PlayerActions, Assembly-CSharp
+        m_MethodName: UseItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a6965d2f-d6dd-4564-bbd2-1b5ae0e67b8e
     m_ActionName: Player/UseAbility[/Keyboard/shift]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1767084903}
+        m_TargetAssemblyTypeName: PlayerActions, Assembly-CSharp
+        m_MethodName: OpenInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: e577f476-2cc0-4697-b765-e09b137b3d48
     m_ActionName: Player/Inventory[/Keyboard/q]
   - m_PersistentCalls:
@@ -703,6 +729,38 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: b2c535e1-7064-4914-9b3e-c9bda0a6765a
     m_ActionName: Player/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1767084903}
+        m_TargetAssemblyTypeName: PlayerActions, Assembly-CSharp
+        m_MethodName: ChangeItemLeft
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d3089cca-d758-4ba0-8f1c-29a06f4c82fc
+    m_ActionName: Player/ChangeItemLeft[/Keyboard/a]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1767084903}
+        m_TargetAssemblyTypeName: PlayerActions, Assembly-CSharp
+        m_MethodName: ChangeItemRight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 65b57d3f-e5c4-4497-af0e-d756547e1650
+    m_ActionName: Player/ChangeItemRight[/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -723,6 +781,20 @@ MonoBehaviour:
   items: []
   selectedIndex: 0
   selectedItemText: {fileID: 0}
+--- !u!114 &1767084903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767084896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a465e7417d86da499707c02d2daefcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryRef: {fileID: 1767084902}
+  playerMoveRef: {fileID: 1767084900}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
