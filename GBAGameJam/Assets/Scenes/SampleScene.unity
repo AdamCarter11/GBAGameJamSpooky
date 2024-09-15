@@ -472,6 +472,7 @@ GameObject:
   - component: {fileID: 1767084897}
   - component: {fileID: 1767084901}
   - component: {fileID: 1767084900}
+  - component: {fileID: 1767084902}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -630,15 +631,6 @@ MonoBehaviour:
       Eizikovich vJoy - Virtual Joystick/stick]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: fd7e965a-ad0c-4c33-845b-41c964cc07a2
-    m_ActionName: Player/Look[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ad8c5e08-d7c3-40fd-aa41-9d269464034e
-    m_ActionName: Player/Fire[/Mouse/leftButton,/Shaul Eizikovich vJoy - Virtual
-      Joystick/trigger]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 0f01a0d4-ab19-4450-8e58-6e6cc352c1a8
     m_ActionName: UI/Navigate[/Shaul Eizikovich vJoy - Virtual Joystick/stick/up,/Shaul
       Eizikovich vJoy - Virtual Joystick/stick/down,/Shaul Eizikovich vJoy - Virtual
@@ -695,11 +687,42 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 21a2f89c-8b05-4740-9024-c48995a1131f
     m_ActionName: Player/Jump[/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a6965d2f-d6dd-4564-bbd2-1b5ae0e67b8e
+    m_ActionName: Player/UseAbility[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e577f476-2cc0-4697-b765-e09b137b3d48
+    m_ActionName: Player/Inventory[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bfdc0c5a-776a-4b03-9733-308c0b9b9b1c
+    m_ActionName: Player/Interact[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b2c535e1-7064-4914-9b3e-c9bda0a6765a
+    m_ActionName: Player/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1767084902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767084896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95f0a77da04ef6e46940425bd928a257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
+  selectedIndex: 0
+  selectedItemText: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
