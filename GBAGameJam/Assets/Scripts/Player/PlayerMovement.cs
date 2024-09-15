@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = playerSprite.GetComponent<Animator>();
     }
     private void Update()
     {
@@ -31,7 +32,16 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
-        animator = playerSprite.GetComponent<Animator>();
+        if(!IsGrounded())
+        {
+            animator.SetFloat("Jump", rb.velocity.y);
+        }
+        else
+        {
+            animator.SetFloat("Jump", 0);
+        }
+        
+        animator.SetBool("Grounded", IsGrounded());
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -44,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * .5f);
         }
-        animator.SetFloat("Jump", rb.velocity.y);
+        
     }
 
     private bool IsGrounded()
@@ -64,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(canMove)
             horizontalMove = context.ReadValue<Vector2>().x;
-            playerSprite.GetComponent<Animator>().SetFloat("Move", Mathf.Abs(horizontalMove));
+        else horizontalMove = 0f;
+        playerSprite.GetComponent<Animator>().SetFloat("Move", Mathf.Abs(horizontalMove));
     }
 }
