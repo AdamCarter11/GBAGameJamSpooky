@@ -9,10 +9,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpPower = 10f;
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] GameObject playerSprite;
     Rigidbody2D rb;
     float horizontalMove;
     bool isFacingRight = true;
     [HideInInspector] public bool canMove = true;
+    private Animator animator;
 
     private void Start()
     {
@@ -29,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
+        animator = playerSprite.GetComponent<Animator>();
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -41,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * .5f);
         }
+        animator.SetFloat("Jump", rb.velocity.y);
     }
 
     private bool IsGrounded()
@@ -60,5 +64,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if(canMove)
             horizontalMove = context.ReadValue<Vector2>().x;
+            playerSprite.GetComponent<Animator>().SetFloat("Move", Mathf.Abs(horizontalMove));
     }
 }
