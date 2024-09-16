@@ -10,8 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] GameObject playerSprite;
+    [SerializeField] GameObject footstepManager;
     Rigidbody2D rb;
-    float horizontalMove;
+    float horizontalMove = 0;
     bool isFacingRight = true;
     [HideInInspector] public bool canMove = true;
     private Animator animator;
@@ -74,7 +75,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if(canMove)
             horizontalMove = context.ReadValue<Vector2>().x;
-        else horizontalMove = 0f;
+        else 
+            horizontalMove = 0f;
         playerSprite.GetComponent<Animator>().SetFloat("Move", Mathf.Abs(horizontalMove));
+        if (Mathf.Abs(horizontalMove) > 0 && IsGrounded())
+        {
+            footstepManager.SetActive(true);
+        }
+        else
+        {
+            footstepManager.SetActive(false);
+        }
     }
 }
