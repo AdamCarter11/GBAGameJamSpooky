@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     bool isFacingRight = true;
     [HideInInspector] public bool canMove = true;
     private Animator animator;
+    [HideInInspector] public bool marioHat = false;
 
     private void Start()
     {
@@ -24,8 +25,16 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        MovementLogic();
+
+        AnimationLogic();
+    }
+
+    #region Movement logic + animations
+    private void MovementLogic()
+    {
         rb.velocity = new Vector2(horizontalMove * moveSpeed, rb.velocity.y);
-        if(!isFacingRight && horizontalMove > 0)
+        if (!isFacingRight && horizontalMove > 0)
         {
             Flip();
         }
@@ -33,7 +42,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
-        if(!IsGrounded())
+    }
+    private void AnimationLogic()
+    {
+        if (!IsGrounded())
         {
             animator.SetFloat("Jump", rb.velocity.y);
         }
@@ -41,10 +53,12 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetFloat("Jump", 0);
         }
-        
+
         animator.SetBool("Grounded", IsGrounded());
     }
+    #endregion
 
+    #region Input logic
     public void Jump(InputAction.CallbackContext context)
     {
         if(context.performed && IsGrounded())
@@ -58,6 +72,25 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public void Move(InputAction.CallbackContext context)
+    {
+        if (canMove)
+            horizontalMove = context.ReadValue<Vector2>().x;
+        else
+            horizontalMove = 0f;
+        playerSprite.GetComponent<Animator>().SetFloat("Move", Mathf.Abs(horizontalMove));
+        if (Mathf.Abs(horizontalMove) > 0 && IsGrounded())
+        {
+            footstepManager.SetActive(true);
+        }
+        else
+        {
+            footstepManager.SetActive(false);
+        }
+    }
+    #endregion
+
+    #region Movement helper functions
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, .2f, groundLayer);
@@ -70,21 +103,6 @@ public class PlayerMovement : MonoBehaviour
         localScale.x *= -1f;
         transform.localScale = localScale;
     }
+    #endregion
 
-    public void Move(InputAction.CallbackContext context)
-    {
-        if(canMove)
-            horizontalMove = context.ReadValue<Vector2>().x;
-        else 
-            horizontalMove = 0f;
-        playerSprite.GetComponent<Animator>().SetFloat("Move", Mathf.Abs(horizontalMove));
-        if (Mathf.Abs(horizontalMove) > 0 && IsGrounded())
-        {
-            footstepManager.SetActive(true);
-        }
-        else
-        {
-            footstepManager.SetActive(false);
-        }
-    }
 }

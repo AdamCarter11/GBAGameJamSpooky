@@ -16,6 +16,9 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] float rollSpeed = 3f;
     [SerializeField] float destroyTime = 8f;
 
+    [Header("Mario hat vars")]
+    [SerializeField] GameObject headBounceObj;
+
     public void OpenInventory(InputAction.CallbackContext context)
     {
         
@@ -40,6 +43,7 @@ public class PlayerActions : MonoBehaviour
         {
             inventoryRef.SelectPreviousItem();
             print("Left item");
+            ActivateItem();
         }
     }
     public void ChangeItemRight(InputAction.CallbackContext context)
@@ -49,6 +53,7 @@ public class PlayerActions : MonoBehaviour
         {
             inventoryRef.SelectNextItem();
             print("Right item");
+            ActivateItem();
         }
     }
 
@@ -60,11 +65,26 @@ public class PlayerActions : MonoBehaviour
             print("use item");
             if (itemInUse != null)
             {
-                // call item effect function
                 if (itemInUse.itemName.Contains("Barrel"))
                 {
                     ThrowBarrel();
                 }
+            }
+        }
+    }
+
+    private void ActivateItem()
+    {
+        itemInUse = inventoryRef.ReturnItem();
+        if (itemInUse != null)
+        {
+            if (itemInUse.itemName.Contains("Bouncy"))
+            {
+                EquipMarioHat(true);
+            }
+            else
+            {
+                EquipMarioHat(false);
             }
         }
     }
@@ -80,8 +100,24 @@ public class PlayerActions : MonoBehaviour
             tempBarrel.GetComponent<Rigidbody2D>().AddForce(throwDir * throwForce, ForceMode2D.Impulse);
             tempBarrel.GetComponent<Rigidbody2D>().AddTorque(rollSpeed * -transform.localScale.x, ForceMode2D.Impulse);
             Destroy(tempBarrel, destroyTime);
+            StartCoroutine(BarrelCooldown());
         }
+    }
+    IEnumerator BarrelCooldown()
+    {
+        canThrowBarrel = false;
+        yield return new WaitForSeconds(itemInUse.cooldown);
+        canThrowBarrel = true;
     }
     #endregion
 
+    #region Item: Mario hat
+    private void EquipMarioHat(bool equip)
+    {
+        if (equip)
+            headBounceObj.SetActive(true);
+        else
+            headBounceObj.SetActive(false);
+    }
+    #endregion
 }
