@@ -14,17 +14,17 @@ public class Inventory : MonoBehaviour
         UpdateSelectedItemUI();
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SelectPreviousItem();
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            SelectNextItem();
-        }
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //    {
+    //        SelectPreviousItem();
+    //    }
+    //    else if (Input.GetKeyDown(KeyCode.D))
+    //    {
+    //        SelectNextItem();
+    //    }
+    //}
 
     public void AddItem(Item newItemToAdd)
     {

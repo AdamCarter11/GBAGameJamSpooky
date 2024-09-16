@@ -9,6 +9,13 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] PlayerMovement playerMoveRef;
     Item itemInUse = null;
 
+    [Header("Barrel Vars")]
+    [SerializeField] Transform throwPoint;
+    [SerializeField] GameObject barrelObj;
+    [SerializeField] float throwForce;
+    [SerializeField] float rollSpeed = 3f;
+    [SerializeField] float destroyTime = 8f;
+
     public void OpenInventory(InputAction.CallbackContext context)
     {
         
@@ -47,11 +54,34 @@ public class PlayerActions : MonoBehaviour
 
     public void UseItem(InputAction.CallbackContext context)
     {
-        itemInUse = inventoryRef.ReturnItem();
-        if(itemInUse != null)
+        if (context.performed)
         {
-            // call item effect function
-
+            itemInUse = inventoryRef.ReturnItem();
+            print("use item");
+            if (itemInUse != null)
+            {
+                // call item effect function
+                if (itemInUse.itemName.Contains("Barrel"))
+                {
+                    ThrowBarrel();
+                }
+            }
         }
     }
+
+    #region Item: Kong barrel
+    bool canThrowBarrel = true;
+    private void ThrowBarrel()
+    {
+        if (canThrowBarrel)
+        {
+            GameObject tempBarrel = Instantiate(barrelObj, throwPoint.position, Quaternion.identity);
+            Vector2 throwDir = new Vector2(transform.localScale.x, 1f).normalized;
+            tempBarrel.GetComponent<Rigidbody2D>().AddForce(throwDir * throwForce, ForceMode2D.Impulse);
+            tempBarrel.GetComponent<Rigidbody2D>().AddTorque(rollSpeed * -transform.localScale.x, ForceMode2D.Impulse);
+            Destroy(tempBarrel, destroyTime);
+        }
+    }
+    #endregion
+
 }

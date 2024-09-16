@@ -122,6 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &342272804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342272805}
+  m_Layer: 0
+  m_Name: ThrowPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &342272805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342272804}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.833, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1767084899}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &517097490
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +605,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!4 &1767084899
 Transform:
   m_ObjectHideFlags: 0
@@ -590,6 +621,7 @@ Transform:
   m_Children:
   - {fileID: 951076796}
   - {fileID: 1462312992}
+  - {fileID: 342272805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1767084900
@@ -801,7 +833,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95f0a77da04ef6e46940425bd928a257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
+  items:
+  - {fileID: 11400000, guid: 7c6b9a4297a3c8f44b67698dbd70eed4, type: 2}
+  - {fileID: 11400000, guid: d7dfc15744feb52468439224637baf98, type: 2}
   selectedIndex: 0
   selectedItemText: {fileID: 0}
 --- !u!114 &1767084903
@@ -818,6 +852,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryRef: {fileID: 1767084902}
   playerMoveRef: {fileID: 1767084900}
+  throwPoint: {fileID: 342272805}
+  barrelObj: {fileID: 6748136305861605, guid: 372153cb676d22242a1106d109d2e665, type: 3}
+  throwForce: 4
+  rollSpeed: 3
+  destroyTime: 8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
