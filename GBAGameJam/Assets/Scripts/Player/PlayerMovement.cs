@@ -28,12 +28,21 @@ public class PlayerMovement : MonoBehaviour
         MovementLogic();
 
         AnimationLogic();
+        //print(canMove);
     }
 
     #region Movement logic + animations
     private void MovementLogic()
     {
-        rb.velocity = new Vector2(horizontalMove * moveSpeed, rb.velocity.y);
+        if(canMove)
+        {
+            rb.velocity = new Vector2(horizontalMove * moveSpeed, rb.velocity.y);
+        }
+        else
+        {
+            rb.velocity = new Vector2(0,0);
+        }
+
         if (!isFacingRight && horizontalMove > 0)
         {
             Flip();

@@ -7,7 +7,9 @@ public class PlayerActions : MonoBehaviour
 {
     [SerializeField] Inventory inventoryRef;
     [SerializeField] PlayerMovement playerMoveRef;
+    [SerializeField] Animator animatorRef;
     Item itemInUse = null;
+    private bool isSwitchingItem;
 
     [Header("Barrel Vars")]
     [SerializeField] Transform throwPoint;
@@ -19,26 +21,35 @@ public class PlayerActions : MonoBehaviour
     [Header("Mario hat vars")]
     [SerializeField] GameObject headBounceObj;
 
+    [Header("SwordVars")]
+    [SerializeField] bool canSwing = true;
+
     public void OpenInventory(InputAction.CallbackContext context)
     {
         
-        if(Time.timeScale == 1)
+        if(context.performed)
         {
-            Time.timeScale = 0;
-            playerMoveRef.canMove = false;
+            if (Time.timeScale == 1)
+            {
+                Time.timeScale = 0;
+                playerMoveRef.canMove = false;
+                isSwitchingItem = true;
+            }
+            else
+            {
+                Time.timeScale = 1;
+                playerMoveRef.canMove = true;
+                isSwitchingItem = false;
+            }
         }
-        else
-        {
-            Time.timeScale = 1;
-            playerMoveRef.canMove = true;
-        }
+        
 
         // open inventory display
     }
 
     public void ChangeItemLeft(InputAction.CallbackContext context)
     {
-        if (playerMoveRef.canMove) return;
+        if (!isSwitchingItem && Time.timeScale != 0) return;
         if (context.performed)
         {
             inventoryRef.SelectPreviousItem();
@@ -48,7 +59,7 @@ public class PlayerActions : MonoBehaviour
     }
     public void ChangeItemRight(InputAction.CallbackContext context)
     {
-        if (playerMoveRef.canMove) return;
+        if (!isSwitchingItem && Time.timeScale != 0) return;
         if (context.performed)
         {
             inventoryRef.SelectNextItem();
@@ -62,12 +73,16 @@ public class PlayerActions : MonoBehaviour
         if (context.performed)
         {
             itemInUse = inventoryRef.ReturnItem();
-            print("use item");
+            print("use item" + itemInUse.itemName);
             if (itemInUse != null)
             {
                 if (itemInUse.itemName.Contains("Barrel"))
                 {
                     ThrowBarrel();
+                }
+                if (itemInUse.itemName == "Dragon sword" && canSwing)
+                {
+                    SwingSword();
                 }
             }
         }
@@ -118,6 +133,26 @@ public class PlayerActions : MonoBehaviour
             headBounceObj.SetActive(true);
         else
             headBounceObj.SetActive(false);
+    }
+    #endregion
+
+    #region Item Sword
+    private void SwingSword()
+    {
+        print("Swing Sword");
+        animatorRef.SetBool("Attacking", true);
+        StartCoroutine(SwingCooldown());
+    }
+
+    IEnumerator SwingCooldown()
+    {
+        canSwing = false;
+        playerMoveRef.canMove = false;
+       
+        yield return new WaitForSeconds(.5f);
+        canSwing = true;
+        animatorRef.SetBool("Attacking", false);
+        playerMoveRef.canMove = true;
     }
     #endregion
 }
