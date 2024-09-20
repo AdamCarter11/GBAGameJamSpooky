@@ -81,6 +81,60 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public int ReturnPrevIndex()
+    {
+        int prevIndex = selectedIndex;
+        if (items.Count <= 1)
+        {
+            return -1;
+        }
+        else
+        {
+            prevIndex--;
+
+            if (prevIndex <= 0)
+            {
+                return (items.Count-1); // Cycle back to the first item
+            }
+            return prevIndex;
+        }
+    }
+    public int ReturnNextIndex()
+    {
+        int nextIndex = selectedIndex;
+        if (items.Count <= 1)
+        {
+            return -1;
+        }
+        else
+        {
+            nextIndex++;
+            if (nextIndex >= items.Count)
+            {
+                return 0; // Cycle back to the first item
+            }
+            return nextIndex;
+        }
+    }
+
+    public int ReturnCurrIndex()
+    {
+        return selectedIndex;
+    } 
+
+    public int ReturnItemCount()
+    {
+        return items.Count;
+    }
+
+    public Item ReturnItemAtIndex(int index)
+    {
+        if (index < 0 || index >= items.Count)
+            return null;
+
+        return items[index];
+    }
+
     void UpdateSelectedItemUI()
     {
         if (selectedItemText != null && items.Count > 0)

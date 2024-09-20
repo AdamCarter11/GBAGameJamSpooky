@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerActions : MonoBehaviour
 {
+    [SerializeField] GameObject prevItemImage, currItemImage, nextItemImage;
     [SerializeField] Inventory inventoryRef;
     [SerializeField] PlayerMovement playerMoveRef;
     [SerializeField] Animator animatorRef;
@@ -34,17 +36,66 @@ public class PlayerActions : MonoBehaviour
                 Time.timeScale = 0;
                 playerMoveRef.canMove = false;
                 isSwitchingItem = true;
+                UpdateUiImages(true);
             }
             else
             {
                 Time.timeScale = 1;
                 playerMoveRef.canMove = true;
                 isSwitchingItem = false;
+                UpdateUiImages(false);
             }
         }
         
 
         // open inventory display
+    }
+
+    private void UpdateUiImages(bool turnOn)
+    {
+        if (turnOn)
+        {
+            int prevIndex = inventoryRef.ReturnPrevIndex();
+            if (prevIndex < 0)
+            {
+                prevItemImage.SetActive(false);
+            }
+            else
+            {
+                prevItemImage.SetActive(true);
+                prevItemImage.GetComponent<Image>().sprite = inventoryRef.ReturnItemAtIndex(prevIndex).itemIcon;
+            }
+
+            int nextIndex = inventoryRef.ReturnNextIndex();
+            if (nextIndex < 0)
+            {
+                nextItemImage.SetActive(false);
+            }
+            else
+            {
+                nextItemImage.SetActive(true);
+                print("next index: " + nextIndex);
+                nextItemImage.GetComponent<Image>().sprite = inventoryRef.ReturnItemAtIndex(nextIndex).itemIcon;
+            }
+
+            Item currItem = inventoryRef.ReturnItem();
+            if(currItem != null)
+            {
+                currItemImage.SetActive(true);
+                currItemImage.GetComponent<Image>().sprite = currItem.itemIcon;
+            }
+            else
+            {
+                currItemImage.SetActive(false);
+            }
+
+        }
+        else
+        {
+            prevItemImage.SetActive(false);
+            currItemImage.SetActive(false);
+            nextItemImage.SetActive(false);
+        }
     }
 
     public void ChangeItemLeft(InputAction.CallbackContext context)
@@ -55,6 +106,7 @@ public class PlayerActions : MonoBehaviour
             inventoryRef.SelectPreviousItem();
             print("Left item");
             ActivateItem();
+            UpdateUiImages(true);
         }
     }
     public void ChangeItemRight(InputAction.CallbackContext context)
@@ -65,6 +117,7 @@ public class PlayerActions : MonoBehaviour
             inventoryRef.SelectNextItem();
             print("Right item");
             ActivateItem();
+            UpdateUiImages(true);
         }
     }
 
