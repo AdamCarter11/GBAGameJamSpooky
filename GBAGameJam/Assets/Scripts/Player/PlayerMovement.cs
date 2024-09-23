@@ -11,12 +11,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] GameObject playerSprite;
     [SerializeField] GameObject footstepManager;
+    [SerializeField] float hitGroundVelocity = 8f;
+    [SerializeField] float hitGroundPauseTime = .2f;
     Rigidbody2D rb;
+    bool onGround = false;
+    bool groundPause = false;
     float horizontalMove = 0;
     bool isFacingRight = true;
     [HideInInspector] public bool canMove = true;
     private Animator animator;
     [HideInInspector] public bool marioHat = false;
+    
 
     private void Start()
     {
@@ -26,21 +31,54 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         MovementLogic();
+        FallLogic();
 
         AnimationLogic();
         //print(canMove);
     }
 
+    #region Falling Logic
+    private void FallLogic()
+    {
+        if (!IsGrounded())
+        {
+            onGround = false;
+        }
+        else
+        {
+            if (!onGround && Mathf.Abs(rb.velocity.y) > hitGroundVelocity)
+            {
+                // trigger hit ground animation + maybe sfx
+
+                // pause movement so you can't 
+                StartCoroutine(PauseMovement(hitGroundPauseTime));
+            }
+            onGround = true;
+        }
+    }
+    IEnumerator PauseMovement(float pauseTime)
+    {
+        animator.SetBool("HitGround", true);
+        groundPause = true;
+        yield return new WaitForSeconds(pauseTime);
+        groundPause = false;
+        animator.SetBool("HitGround", false);
+    }
+    #endregion
+
     #region Movement logic + animations
     private void MovementLogic()
     {
-        if(canMove)
+        if(canMove && !groundPause)
         {
             rb.velocity = new Vector2(horizontalMove * moveSpeed, rb.velocity.y);
         }
         else
         {
-            rb.velocity = new Vector2(0,0);
+            if(!groundPause)
+                rb.velocity = new Vector2(0,0);
+            else
+                rb.velocity = new Vector2(0, rb.velocity.y);
         }
 
         if (!isFacingRight && horizontalMove > 0)

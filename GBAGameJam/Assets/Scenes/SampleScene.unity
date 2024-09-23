@@ -24810,6 +24810,8 @@ MonoBehaviour:
     m_Bits: 384
   playerSprite: {fileID: 951076795}
   footstepManager: {fileID: 1084120975}
+  hitGroundVelocity: 8
+  hitGroundPauseTime: 0.2
   canMove: 1
   marioHat: 0
 --- !u!114 &1767084901
